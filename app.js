@@ -28,12 +28,14 @@ app.use(express.urlencoded({ extended: false }));
 // init session
 app.use(
   session({
-    secret: "its a secreat",
+    secret: "itsasecreat",
     resave: false,
     saveUninitialized: false,
     cookie: {
       // secure: true, // only use when the server in https
       httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "lax",
     },
   })
 );
@@ -59,7 +61,6 @@ app.use((error, req, res, next) => {
   res.status(error.status).send(error);
   //   res.send(error);
 });
-
 
 mongoose
   .connect(
