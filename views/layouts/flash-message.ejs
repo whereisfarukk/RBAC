@@ -1,0 +1,48 @@
+<style>
+  .flash-container {
+    margin: 1rem 0;
+  }
+
+  .flash {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .flash-error {
+    background-color: #ffe5e5;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+  }
+
+  .flash-success {
+    background-color: #e5ffe5;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+  }
+
+  .flash-info {
+    background-color: #e5f3ff;
+    color: #2980b9;
+    border: 1px solid #2980b9;
+  }
+</style>
+
+<% if (messages && Object.keys(messages).length > 0) { %>
+  <div class="flash-container">
+    <% 
+      Object.entries(messages).forEach(function(entry) {
+        var key = entry[0];
+        var msgs = entry[1];
+        msgs.forEach(function(msg) {
+    %>
+      <div class="flash flash-<%= key %>">
+        <%= msg %>
+      </div>
+    <% 
+        });
+      }); 
+    %>
+  </div>
+<% } %>
