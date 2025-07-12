@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const createHttpError = require("http-errors");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
+const passport = require("passport");
 const PORT = process.env.PORT || 8080;
 
 const session = require("express-session");
@@ -39,6 +40,12 @@ app.use(
     },
   })
 );
+// for passportjs authentication
+app.use(passport.initialize());
+app.use(passport.session());
+require("./utils/passportAuth");
+
+//connect flash
 app.use(connectFlash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();

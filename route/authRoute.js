@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 const { validationResult } = require("express-validator");
 
 const signupValidator = require("../validator/auth/signupValidator");
@@ -8,9 +9,14 @@ const User = require("../models/User");
 router.get("/login", (req, res, next) => {
   res.render("login", { title: "Login" });
 });
-router.post("/login", (req, res, next) => {
-  res.send("<h1>This is login page</h1>");
-});
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/user/profile",
+    failureRedirect: "/auth/login",
+    failureFlash: true,
+  })
+);
 router.get("/register", (req, res, next) => {
   // res.send("<h1>This is register page</h1>");
   const messages = req.flash();
@@ -51,8 +57,13 @@ router.post("/register", signupValidator, async (req, res, next) => {
     console.log(e);
   }
 });
-
 router.get("/logout", (req, res, next) => {
-  res.send("<h1>This is logout page</h1>");
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
+
 module.exports = router;

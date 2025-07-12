@@ -1,0 +1,90 @@
+<%- include('./layouts/header') %>
+
+<style>
+  .profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .profile-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #007bff;
+    object-fit: cover;
+  }
+
+  .profile-header h2 {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .profile-header p {
+    color: #666;
+    font-size: 14px;
+  }
+
+  .profile-section {
+    margin-top: 25px;
+  }
+
+  .profile-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
+  }
+
+  .profile-section p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .edit-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .edit-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="profile-container">
+  <div class="profile-header">
+    <!-- You can later use profile picture: <img src="<%= profile.picture %>" alt="Profile Picture" /> -->
+    <h2><%= profile.username %></h2>
+    <p><%= profile.email %></p>
+  </div>
+
+  <div class="profile-section">
+    <h3>About</h3>
+    <p>
+      Hi, I’m <%= profile.username %> — a web developer based in Bangladesh.
+      (You can customize this section or allow the user to add a bio later.)
+    </p>
+  </div>
+
+  <div class="profile-section" style="text-align: center">
+    <a href="/edit-profile" class="edit-btn">Edit Profile</a>
+  </div>
+</div>
+
+<%- include('./layouts/footer') %>

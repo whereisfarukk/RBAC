@@ -1,5 +1,7 @@
 const router = require("express").Router();
 router.get("/profile", (req, res, next) => {
-  res.send("<h1>This is the Profile page</h1>");
+  // console.log(req.user);
+  const profile = req.user;
+  res.render("profile", { title: "profile", profile });
 });
 module.exports = router;
