@@ -19,6 +19,7 @@ const connectFlash = require("connect-flash");
 const indexRoute = require("./route/indexRoute");
 const userRoute = require("./route/userRoute");
 const authRoute = require("./route/authRoute");
+const adminRoute = require("./route/adminRoute");
 
 app.use(morgan("dev"));
 
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
+app.use("/admin", adminRoute);
 app.use("/*splat", (req, res) => {
   res.send("jfdns");
 });

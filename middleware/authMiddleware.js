@@ -1,3 +1,5 @@
+const { roles } = require("../utils/constantUserRole");
+
 exports.isAuthenticated = (req, res, next) => {
   // console.log("user object", req.user.isLoggedIn);
   if (req.isAuthenticated()) {
@@ -9,8 +11,16 @@ exports.isAuthenticated = (req, res, next) => {
 exports.isUnAuthenticated = (req, res, next) => {
   // console.log("user object", req.user.isLoggedIn);
   if (req.isAuthenticated()) {
-    return res.redirect("back");
+    return res.redirect("/auth/login");
   } else {
     next();
+  }
+};
+exports.isAdmin = (req, res, next) => {
+  // console.log("user object", req.user.isLoggedIn);
+  if (req.user.role === roles.admin) {
+    next();
+  } else {
+    return res.redirect("/");
   }
 };

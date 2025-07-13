@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { validationResult } = require("express-validator");
 
+const { roles } = require("../utils/constantUserRole");
 const signupValidator = require("../validator/auth/signupValidator");
 const {
   isAuthenticated,
@@ -53,6 +54,10 @@ router.post(
 
         return res.redirect("/auth/register");
       }
+      const role =
+        email === process.env.ADMIN_EMAIL ? roles.admin : roles.client;
+      req.body.role = role;
+
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       req.body.password = hashedPassword;
 
