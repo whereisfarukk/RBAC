@@ -7,6 +7,8 @@ const createHttpError = require("http-errors");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const passport = require("passport");
+const MongoStore = require("connect-mongo");
+
 const PORT = process.env.PORT || 8080;
 
 const session = require("express-session");
@@ -38,12 +40,20 @@ app.use(
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "lax",
     },
+    store: MongoStore.create({
+      mongoUrl: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.gaywc.mongodb.net/rbac`,
+      collectionName: "sessions",
+    }),
   })
 );
 // for passportjs authentication
 app.use(passport.initialize());
 app.use(passport.session());
 require("./utils/passportAuth");
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 //connect flash
 app.use(connectFlash());

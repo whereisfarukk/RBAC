@@ -1,13 +1,17 @@
 <%- include('./layouts/header') %>
 
 <style>
+  * {
+    margin: 0;
+  }
   .profile-container {
     max-width: 600px;
     margin: 40px auto;
     background-color: #fff;
     border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 4px solid rgb(176, 176, 176);
+    box-shadow: 0 4px 12px rgba(139, 139, 139, 0.1);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 
@@ -33,22 +37,22 @@
   .profile-header p {
     color: #666;
     font-size: 14px;
+    margin-top: 5px;
   }
 
   .profile-section {
-    margin-top: 25px;
+    margin-top: 15px;
   }
 
   .profile-section h3 {
     font-size: 18px;
-    margin-bottom: 10px;
+
     color: #444;
   }
 
   .profile-section p {
     font-size: 14px;
     color: #555;
-    line-height: 1.6;
   }
 
   .edit-btn {
@@ -67,24 +71,32 @@
   }
 </style>
 
+<% if (profile) { %>
 <div class="profile-container">
   <div class="profile-header">
-    <!-- You can later use profile picture: <img src="<%= profile.picture %>" alt="Profile Picture" /> -->
     <h2><%= profile.username %></h2>
     <p><%= profile.email %></p>
   </div>
 
   <div class="profile-section">
-    <h3>About</h3>
-    <p>
-      Hi, I’m <%= profile.username %> — a web developer based in Bangladesh.
-      (You can customize this section or allow the user to add a bio later.)
-    </p>
+    <h3>ID</h3>
+    <p><%= profile._id %></p>
+  </div>
+  <div class="profile-section">
+    <h3>Role</h3>
+  </div>
+  <div class="profile-section">
+    <h3>User object</h3>
+    <pre><%= JSON.stringify(profile, null, 2) %></pre>
   </div>
 
   <div class="profile-section" style="text-align: center">
     <a href="/edit-profile" class="edit-btn">Edit Profile</a>
   </div>
 </div>
-
-<%- include('./layouts/footer') %>
+<% } else { %>
+<div style="text-align: center; padding: 50px; font-family: sans-serif">
+  <h2>You must be logged in to view your profile.</h2>
+  <a href="/auth/login">Go to Login</a>
+</div>
+<% } %> <%- include('./layouts/footer') %>
