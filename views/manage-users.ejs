@@ -1,0 +1,123 @@
+<%- include('./layouts/header') %>
+
+<h1 class="heading">Manage Users</h1>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef2f3;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .heading {
+    text-align: center;
+    width: 100%;
+    font-size: 32px;
+    font-weight: bold;
+    border-bottom: 3px solid #007bff;
+    display: inline-block;
+    margin: 0 auto 30px;
+    padding-bottom: 10px;
+    color: #333;
+  }
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fdfdfd;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .user-table th {
+    background-color: #f0f4f8;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .user-table tr:hover {
+    background-color: #f9fcff;
+  }
+
+  .role-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .role-select {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background-color: #fff;
+  }
+
+  .update-button {
+    padding: 6px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .update-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="container">
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user._id %></td>
+          <td><%= user.email %></td>
+          <td>
+            <form action="/admin/update-role/<%= user._id %>" method="POST" class="role-form">
+              <input type="hidden" name="id" value="<%= user.id%>">
+              <select name="role" class="role-select">
+                <option value="CLIENT" <%= user.role === 'CLIENT' ? 'selected' : '' %>>Client</option>
+                <option value="MODERATOR" <%= user.role === 'MODERATOR' ? 'selected' : '' %>>Moderator</option>
+                <option value="ADMIN" <%= user.role === 'ADMIN' ? 'selected' : '' %>>Admin</option>
+              </select>
+              <button type="submit" class="update-button">Update</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('./layouts/footer') %>
